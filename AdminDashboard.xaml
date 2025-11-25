@@ -1,0 +1,403 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="EkandidatoAdmin.AdminDashboard"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             Title="AdminDashboard"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="#F4F7F6">
+
+    <!-- ======= Resources / Styles ======= -->
+    <ContentPage.Resources>
+        <Color x:Key="PrimaryGreen">#3E7C59</Color>
+        <Color x:Key="MutedText">#6A7772</Color>
+        <Color x:Key="CardBorder">#E6EBE8</Color>
+        <Color x:Key="DarkText">#2A2E2D</Color>
+
+        <Shadow x:Key="CardShadow" Brush="#55000000" Radius="12" Offset="0,3" Opacity="0.25"/>
+
+        <Style x:Key="Card" TargetType="Border">
+            <Setter Property="BackgroundColor" Value="White"/>
+            <Setter Property="Padding"         Value="16"/>
+            <Setter Property="Shadow"          Value="{StaticResource CardShadow}"/>
+            <Setter Property="StrokeThickness" Value="0"/>
+            <Setter Property="StrokeShape">
+                <Setter.Value>
+                    <RoundRectangle CornerRadius="18"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="Chip" TargetType="Border">
+            <Setter Property="Padding" Value="10,4"/>
+            <Setter Property="BackgroundColor" Value="#EEF4F0"/>
+            <Setter Property="Stroke" Value="#DDE5E0"/>
+            <Setter Property="StrokeThickness" Value="1"/>
+            <Setter Property="HorizontalOptions" Value="Start"/>
+            <Setter Property="Margin" Value="0,6,0,0"/>
+            <Setter Property="StrokeShape">
+                <Setter.Value>
+                    <RoundRectangle CornerRadius="12"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </ContentPage.Resources>
+
+    <!-- ====== Root layout with overlay layer for drawer ====== -->
+    <Grid RowDefinitions="Auto,*">
+
+        <!-- ======= Header ======= -->
+        <Grid Grid.Row="0" BackgroundColor="{StaticResource PrimaryGreen}" Padding="12">
+            <Grid ColumnDefinitions="Auto,*,Auto" VerticalOptions="Center">
+
+                <Button x:Name="HamburgerBtn"
+                        Text="☰"
+                        FontSize="22"
+                        TextColor="White"
+                        BackgroundColor="Transparent"
+                        Padding="0,0"
+                        Clicked="ToggleDrawerClicked"/>
+                <Label Grid.Column="1" Text="Admin Dashboard" TextColor="White" FontAttributes="Bold" FontSize="18" VerticalOptions="Center"/>
+                <Button Grid.Column="2"
+                        Text="Logout"
+                        TextColor="White"
+                        BackgroundColor="#2F6046"
+                        CornerRadius="12"
+                        Padding="18,10"
+                        Command="{Binding LogoutCommand}"/>
+            </Grid>
+        </Grid>
+
+
+        <!-- ======= Body ======= -->
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="16" Spacing="12">
+
+                <!-- ======= KPI Cards (NEW) ======= -->
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="12" Margin="0,2,0,8">
+
+                    <!-- Total Students -->
+                    <Border Style="{StaticResource Card}">
+                        <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="*,Auto">
+                            <Label Text="Total Students"
+                     FontSize="12"
+                     TextColor="{StaticResource MutedText}"
+                     VerticalOptions="End"/>
+                            <Label Grid.Row="1"
+                     Text="{Binding TotalStudents}"
+                     FontSize="28"
+                     FontAttributes="Bold"
+                     TextColor="{StaticResource DarkText}"
+                     VerticalOptions="Start"/>
+                            <!-- small icon on the right -->
+                            <Label Grid.Column="1" Grid.RowSpan="2"
+                     Text="👥"
+                     FontSize="26"
+                     TextColor="#1E88E5"
+                     VerticalOptions="Center"
+                     HorizontalOptions="End"/>
+                        </Grid>
+                    </Border>
+
+                    <!-- Votes Cast -->
+                    <Border Grid.Column="1" Style="{StaticResource Card}">
+                        <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="*,Auto">
+                            <Label Text="Votes Cast"
+                     FontSize="12"
+                     TextColor="{StaticResource MutedText}"
+                     VerticalOptions="End"/>
+                            <Label Grid.Row="1"
+                     Text="{Binding VotesCast}"
+                     FontSize="28"
+                     FontAttributes="Bold"
+                     TextColor="{StaticResource DarkText}"
+                     VerticalOptions="Start"/>
+                            <!-- small icon on the right -->
+                            <Label Grid.Column="1" Grid.RowSpan="2"
+                     Text="✅"
+                     FontSize="24"
+                     TextColor="#2E7D32"
+                     VerticalOptions="Center"
+                     HorizontalOptions="End"/>
+                        </Grid>
+                    </Border>
+
+                </Grid>
+
+                <!-- ======= Analytics Cards ======= -->
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                    <Border Style="{StaticResource Card}">
+                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12" VerticalOptions="Center">
+                            <Border WidthRequest="52" HeightRequest="52" BackgroundColor="#F1F3F2">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="26"/>
+                                </Border.StrokeShape>
+                                <Label Text="👤" FontSize="22" HorizontalOptions="Center" VerticalOptions="Center"/>
+                            </Border>
+                            <VerticalStackLayout>
+                                <Label Text="{Binding TotalCandidates}" FontSize="26" FontAttributes="Bold" TextColor="{StaticResource DarkText}"/>
+                                <Label Text="Total Candidates" FontSize="12" TextColor="{StaticResource MutedText}"/>
+                            </VerticalStackLayout>
+                        </Grid>
+                    </Border>
+
+                    <Border Style="{StaticResource Card}">
+                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12" VerticalOptions="Center">
+                            <Border WidthRequest="52" HeightRequest="52" BackgroundColor="#F1F3F2">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="26"/>
+                                </Border.StrokeShape>
+                                <Label Text="📈" FontSize="22" HorizontalOptions="Center" VerticalOptions="Center"/>
+                            </Border>
+                            <VerticalStackLayout>
+                                <Label Text="{Binding VotesCast}" FontSize="26" FontAttributes="Bold" TextColor="{StaticResource DarkText}"/>
+                                <Label Text="Vote Cast" FontSize="12" TextColor="{StaticResource MutedText}"/>
+                            </VerticalStackLayout>
+                        </Grid>
+                    </Border>
+                </Grid>
+
+                <!-- ACTION BUTTONS -->
+                <Button Text="+  Add New Candidate"
+                        BackgroundColor="{StaticResource PrimaryGreen}"
+                        TextColor="White"
+                        CornerRadius="12"
+                        Padding="18,12"
+                        Command="{Binding AddCandidateCommand}"/>
+
+                <!-- Optional: go to voting page button -->
+                <Button Text="Go to Voting"
+                        BackgroundColor="White"
+                        TextColor="#2A2E2D"
+                        CornerRadius="12"
+                        Padding="18,12"
+                        BorderColor="{StaticResource CardBorder}"
+                        BorderWidth="1"
+                        Command="{Binding GoToVotingCommand}"/>
+
+                <!-- Manage election settings (if you keep it) -->
+                <Button Text="Manage Election Settings"
+                        BackgroundColor="White"
+                        TextColor="#2A2E2D"
+                        CornerRadius="12"
+                        Padding="18,12"
+                        BorderColor="{StaticResource CardBorder}"
+                        BorderWidth="1"
+                        Command="{Binding ManageSettingsCommand}"/>
+
+                <!-- ======= Candidate List ======= -->
+                <Label Text="Current Candidates" FontAttributes="Bold" FontSize="16" Margin="2,10,0,0" TextColor="{StaticResource DarkText}"/>
+
+                <CollectionView ItemsSource="{Binding Candidates}" SelectionMode="None">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Border Style="{StaticResource Card}" Padding="12" Margin="0,0,0,10">
+                                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12" VerticalOptions="Center">
+                                    <!-- Avatar -->
+                                    <Border WidthRequest="44" HeightRequest="44" BackgroundColor="#F1F3F2">
+                                        <Border.StrokeShape>
+                                            <RoundRectangle CornerRadius="22"/>
+                                        </Border.StrokeShape>
+                                        <Image Source="{Binding PhotoPath}" Aspect="AspectFill">
+                                            <Image.Triggers>
+                                                <DataTrigger TargetType="Image" Binding="{Binding PhotoPath}" Value="{x:Null}">
+                                                    <Setter Property="Source" Value="avatar_placeholder.png"/>
+                                                </DataTrigger>
+                                            </Image.Triggers>
+                                        </Image>
+                                    </Border>
+
+                                    <!-- Details -->
+                                    <VerticalStackLayout>
+                                        <Label Text="{Binding Name}" FontAttributes="Bold" TextColor="{StaticResource DarkText}"/>
+                                        <Label Text="{Binding Position}" FontSize="12" TextColor="{StaticResource MutedText}"/>
+                                        <Border Style="{StaticResource Chip}">
+                                            <Label Text="{Binding PartyName}" FontSize="11" TextColor="{StaticResource DarkText}"/>
+                                        </Border>
+                                    </VerticalStackLayout>
+
+                                    <!-- Votes -->
+                                    <Label Grid.Column="2"
+                                           Text="{Binding Votes, StringFormat='{0} votes'}"
+                                           VerticalOptions="Center"
+                                           TextColor="{StaticResource DarkText}"/>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+
+                    <CollectionView.EmptyView>
+                        <Border Style="{StaticResource Card}">
+                            <Label Text="No candidates yet. Tap “Add New Candidate”."
+                                   TextColor="{StaticResource MutedText}"
+                                   HorizontalTextAlignment="Center"/>
+                        </Border>
+                    </CollectionView.EmptyView>
+                </CollectionView>
+
+                <!-- ======= Calendar Card ======= -->
+                <Border Style="{StaticResource Card}" Margin="0,6,0,16">
+                    <VerticalStackLayout Spacing="12">
+
+                        <!-- Month header -->
+                        <Grid ColumnDefinitions="*,Auto" VerticalOptions="Center">
+                            <Label Text="{Binding MonthTitle}" FontAttributes="Bold" TextColor="{StaticResource DarkText}"/>
+                            <HorizontalStackLayout Grid.Column="1" Spacing="6">
+                                <!-- Prev (◄) -->
+                                <Button Text="◄"
+                                        Padding="10,4"
+                                        CornerRadius="8"
+                                        BackgroundColor="#EFF2F1"
+                                        TextColor="{StaticResource DarkText}"
+                                        Command="{Binding PrevMonthCommand}"/>
+                                <!-- Next (►) -->
+                                <Button Text="►"
+                                        Padding="10,4"
+                                        CornerRadius="8"
+                                        BackgroundColor="#EFF2F1"
+                                        TextColor="{StaticResource DarkText}"
+                                        Command="{Binding NextMonthCommand}"/>
+                            </HorizontalStackLayout>
+                        </Grid>
+
+                        <!-- Day of week -->
+                        <Grid HorizontalOptions="FillAndExpand"
+                              ColumnDefinitions="*,*,*,*,*,*,*"
+                              ColumnSpacing="0"
+                              Margin="8,6,8,0">
+                            <Label Grid.Column="0" Text="SU" HorizontalOptions="Center" HorizontalTextAlignment="Center" TextColor="{StaticResource MutedText}" />
+                            <Label Grid.Column="1" Text="MO" HorizontalOptions="Center" HorizontalTextAlignment="Center" TextColor="{StaticResource MutedText}" />
+                            <Label Grid.Column="2" Text="TU" HorizontalOptions="Center" HorizontalTextAlignment="Center" TextColor="{StaticResource MutedText}" />
+                            <Label Grid.Column="3" Text="WE" HorizontalOptions="Center" HorizontalTextAlignment="Center" TextColor="{StaticResource MutedText}" />
+                            <Label Grid.Column="4" Text="TH" HorizontalOptions="Center" HorizontalTextAlignment="Center" TextColor="{StaticResource MutedText}" />
+                            <Label Grid.Column="5" Text="FR" HorizontalOptions="Center" HorizontalTextAlignment="Center" TextColor="{StaticResource MutedText}" />
+                            <Label Grid.Column="6" Text="SA" HorizontalOptions="Center" HorizontalTextAlignment="Center" TextColor="{StaticResource MutedText}" />
+                        </Grid>
+
+                        <!-- Day grid -->
+                        <CollectionView ItemsSource="{Binding Days}"
+                         SelectionMode="Single"
+                         SelectedItem="{Binding SelectedDay, Mode=TwoWay}"
+                         Margin="8,4,8,0"
+                         HorizontalOptions="FillAndExpand">
+                            <CollectionView.ItemsLayout>
+                                <GridItemsLayout Orientation="Vertical"
+                                                 Span="7"
+                                                 HorizontalItemSpacing="0"
+                                                 VerticalItemSpacing="8"/>
+                            </CollectionView.ItemsLayout>
+
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+
+                                    <!-- Make the item container fill its cell -->
+                                    <ContentView HorizontalOptions="FillAndExpand" Padding="0">
+                                        <Grid Padding="0" RowDefinitions="Auto,Auto" RowSpacing="2"
+                      HorizontalOptions="FillAndExpand">
+
+                                            <!-- Number bubble -->
+                                            <Border x:Name="DayBubble"
+                                                      BackgroundColor="Transparent"
+                                                      HeightRequest="28"
+                                                      WidthRequest="28"
+                                                      HorizontalOptions="Center"
+                                                      VerticalOptions="Center">
+                                                <Border.StrokeShape>
+                                                    <RoundRectangle CornerRadius="14"/>
+                                                </Border.StrokeShape>
+                                                <Label x:Name="DayNumberLabel"
+                                                         Text="{Binding DayNumber}"
+                                                         TextColor="{StaticResource DarkText}"
+                                                         HorizontalOptions="Center"
+                                                         VerticalOptions="Center"
+                                                         Opacity="1"/>
+                                            </Border>
+
+                                            <!-- Event dot -->
+                                            <BoxView Grid.Row="1"
+                                                     HeightRequest="5"
+                                                     WidthRequest="5"
+                                                     CornerRadius="3"
+                                                     Color="{StaticResource PrimaryGreen}"
+                                                     HorizontalOptions="Center"
+                                                     IsVisible="{Binding HasEvents}"/>
+
+                                            <!-- Triggers -->
+                                            <Grid.Triggers>
+                                                <DataTrigger TargetType="Grid" Binding="{Binding IsSelected}" Value="True">
+                                                    <Setter TargetName="DayBubble" Property="Border.BackgroundColor" Value="{StaticResource PrimaryGreen}"/>
+                                                    <Setter TargetName="DayNumberLabel" Property="Label.TextColor" Value="White"/>
+                                                </DataTrigger>
+
+                                                <DataTrigger TargetType="Grid" Binding="{Binding InCurrentMonth}" Value="False">
+                                                    <Setter TargetName="DayNumberLabel" Property="Label.Opacity" Value="0.45"/>
+                                                </DataTrigger>
+                                            </Grid.Triggers>
+                                        </Grid>
+                                    </ContentView>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+
+                        <!-- Selected date + actions -->
+                        <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="12" Margin="0,8,0,0">
+                            <Label Text="{Binding SelectedDateLabel}" VerticalOptions="Center" TextColor="{StaticResource DarkText}"/>
+                            <Button Grid.Column="1"
+                                    Text="Add Event"
+                                    BackgroundColor="{StaticResource PrimaryGreen}"
+                                    TextColor="White"
+                                    CornerRadius="10"
+                                    Command="{Binding AddEventCommand}"/>
+                            <Button Grid.Column="2"
+                                    Text="Delete Event"
+                                    BackgroundColor="#1F000000"
+                                    TextColor="Black"
+                                    CornerRadius="10"
+                                    Command="{Binding DeleteEventCommand}"/>
+                        </Grid>
+
+                    </VerticalStackLayout>
+                </Border>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- ====== LEFT DRAWER OVERLAY ====== -->
+        <Grid x:Name="DrawerHost"
+              Grid.RowSpan="2"
+              IsVisible="False"
+              InputTransparent="False">
+            <!-- Backdrop -->
+            <BoxView x:Name="Backdrop"
+                     BackgroundColor="#80000000"
+                     Opacity="0"
+                     Grid.RowSpan="2">
+                <BoxView.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="Backdrop_Tapped"/>
+                </BoxView.GestureRecognizers>
+            </BoxView>
+
+            <!-- Drawer panel -->
+            <Border x:Name="DrawerPanel"
+                    BackgroundColor="White"
+                    WidthRequest="260"
+                    Padding="16"
+                    HorizontalOptions="Start"
+                    VerticalOptions="FillAndExpand"
+                    TranslationX="-260"
+                    Shadow="{StaticResource CardShadow}">
+                <VerticalStackLayout Spacing="10">
+                    <Grid ColumnDefinitions="*,Auto" Padding="0,4,0,12">
+                        <Label Text="EKANDIDATO🗳️" FontAttributes="Bold" FontSize="18" TextColor="{StaticResource DarkText}"/>
+                        <Button Grid.Column="1" Text="✕" BackgroundColor="Transparent" TextColor="{StaticResource DarkText}" Clicked="ToggleDrawerClicked"/>
+                    </Grid>
+
+                    <!-- 6 menu buttons -->
+                    <Button Text="🏠  Dashboard"           BackgroundColor="#F4F7F6" TextColor="{StaticResource DarkText}" CornerRadius="14" Command="{Binding HomeCommand}"/>
+                    <Button Text="📊  Compare Candidates"   BackgroundColor="#F4F7F6" TextColor="{StaticResource DarkText}" CornerRadius="14" Command="{Binding PollHistoryCommand}"/>
+                    <Button Text="👤  Profile"         BackgroundColor="#F4F7F6" TextColor="{StaticResource DarkText}" CornerRadius="14" Command="{Binding ProfileCommand}"/>
+                    <Button Text="ℹ️  About Us"       BackgroundColor="#F4F7F6" TextColor="{StaticResource DarkText}" CornerRadius="14" Command="{Binding AboutUsCommand}"/>
+                </VerticalStackLayout>
+            </Border>
+        </Grid>
+    </Grid>
+</ContentPage>
