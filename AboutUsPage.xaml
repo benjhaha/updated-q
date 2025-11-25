@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EkandidatoAdmin.AboutUsPage"
+             Title="AboutUsPage"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="#D9E9DE">
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="20">
+
+            <!-- PAGE HEADER -->
+            <Grid ColumnDefinitions="40,*" VerticalOptions="Start">
+                <Image
+                    Source="menu.png"
+                    HeightRequest="28"
+                    WidthRequest="28"
+                    VerticalOptions="Center" />
+
+                <Label
+                    Grid.Column="1"
+                    Text="About Us"
+                    FontSize="20"
+                    VerticalOptions="Center"
+                    FontAttributes="Bold"
+                    TextColor="Black"/>
+            </Grid>
+
+            <!-- TEAM SECTION -->
+            <Label Text="Our Team"
+                   FontSize="18"
+                   FontAttributes="Bold"
+                   TextColor="Black" />
+
+            <FlexLayout
+                Direction="Row"
+                Wrap="Wrap"
+                JustifyContent="Center"
+                AlignItems="Center"
+                
+                >
+                <!-- Member 1 -->
+                <VerticalStackLayout HorizontalOptions="Center">
+                    <Image
+                        Source="default_user.png"
+                        HeightRequest="80"
+                        WidthRequest="80" />
+                    <Label Text="Mariedem Daniel"
+                           FontAttributes="Bold"
+                           HorizontalTextAlignment="Center" />
+                    <Label Text="Project Leader, UI and DB Designer"
+                           FontSize="12"
+                           HorizontalTextAlignment="Center" />
+                </VerticalStackLayout>
+
+                <!-- Member 2 -->
+                <VerticalStackLayout HorizontalOptions="Center">
+                    <Image
+                        Source="default_user.png"
+                        HeightRequest="80"
+                        WidthRequest="80" />
+                    <Label Text="Benedict Callanta"
+                           FontAttributes="Bold"
+                           HorizontalTextAlignment="Center" />
+                    <Label Text="Back End Developer"
+                           FontSize="12"
+                           HorizontalTextAlignment="Center" />
+                </VerticalStackLayout>
+
+                <!-- Member 3 -->
+                <VerticalStackLayout HorizontalOptions="Center">
+                    <Image
+                        Source="default_user.png"
+                        HeightRequest="80"
+                        WidthRequest="80" />
+                    <Label Text="Khaylyn Resurrecion"
+                           FontAttributes="Bold"
+                           HorizontalTextAlignment="Center" />
+                    <Label Text="UI Designer"
+                           FontSize="12"
+                           HorizontalTextAlignment="Center" />
+                </VerticalStackLayout>
+
+                <!-- Member 4 -->
+                <VerticalStackLayout HorizontalOptions="Center">
+                    <Image
+                        Source="default_user.png"
+                        HeightRequest="80"
+                        WidthRequest="80" />
+                    <Label Text="Kim Angella Sales"
+                           FontAttributes="Bold"
+                           HorizontalTextAlignment="Center" />
+                    <Label Text="Back End Developer; DB Designer"
+                           FontSize="12"
+                           HorizontalTextAlignment="Center" />
+                </VerticalStackLayout>
+
+                <!-- Member 5 -->
+                <VerticalStackLayout HorizontalOptions="Center">
+                    <Image
+                        Source="default_user.png"
+                        HeightRequest="80"
+                        WidthRequest="80" />
+                    <Label Text="Anjo Juan Telo"
+                           FontAttributes="Bold"
+                           HorizontalTextAlignment="Center" />
+                    <Label Text="Back End Developer"
+                           FontSize="12"
+                           HorizontalTextAlignment="Center" />
+                </VerticalStackLayout>
+
+            </FlexLayout>
+
+            <!-- CONTACT SECTION -->
+            <Label Text="Contact Us"
+                   FontAttributes="Bold"
+                   FontSize="18"
+                   TextColor="Black" />
+
+            <Label Text="Don’t hesitate to contact us whether you have a suggestion for our improvement, a complaint to discuss, or an issue to solve."
+                   FontSize="13"
+                   TextColor="Black" />
+
+            <Grid ColumnDefinitions="*,*"
+                  ColumnSpacing="20"
+                  Padding="0,10">
+
+                <Button Grid.Column="0"
+        Text="Call Us"
+        CornerRadius="10"
+        HeightRequest="50"
+        Clicked="CallUs_Clicked" />
+
+
+                <Button Grid.Column="1"
+        Text="Email Us"
+        CornerRadius="10"
+        HeightRequest="50"
+        Clicked="EmailUs_Clicked" />
+             
+            </Grid>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

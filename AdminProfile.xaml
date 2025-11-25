@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EkandidatoAdmin.AdminProfile"
+             Title="AdminProfile"
+             BackgroundColor="#F4F7F6"
+             Shell.NavBarIsVisible="False">
+
+    
+
+    <!-- ===== Resources / Styles ===== -->
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="PrimaryGreen">#3E7C59</Color>
+            <Color x:Key="DarkText">#2A2E2D</Color>
+            <Color x:Key="MutedText">#6A7772</Color>
+            <Color x:Key="CardBorder">#E6EBE8</Color>
+
+            <!-- Card -->
+            <Style x:Key="Card" TargetType="Border">
+                <Setter Property="BackgroundColor" Value="White"/>
+                <Setter Property="Padding"         Value="16"/>
+                <Setter Property="StrokeThickness" Value="0"/>
+                <Setter Property="StrokeShape">
+                    <Setter.Value>
+                        <RoundRectangle CornerRadius="18"/>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <!-- Wrapper that provides inner spacing for inputs -->
+            <Style x:Key="InputShell" TargetType="Border">
+                <Setter Property="BackgroundColor" Value="White"/>
+                <Setter Property="Padding"         Value="12,10"/>
+                <Setter Property="StrokeThickness" Value="1"/>
+                <Setter Property="Stroke"          Value="{StaticResource CardBorder}"/>
+                <Setter Property="Margin"          Value="0,6,0,14"/>
+                <Setter Property="StrokeShape">
+                    <Setter.Value>
+                        <RoundRectangle CornerRadius="12"/>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <!-- Entry visuals only (NO padding) -->
+            <Style x:Key="Input" TargetType="Entry">
+                <Setter Property="BackgroundColor"  Value="Transparent"/>
+                <Setter Property="TextColor"        Value="{StaticResource DarkText}"/>
+                <Setter Property="PlaceholderColor" Value="{StaticResource MutedText}"/>
+                <Setter Property="FontSize"         Value="14"/>
+                <Setter Property="HeightRequest"    Value="24"/>
+            </Style>
+
+            <Style x:Key="SectionLabel" TargetType="Label">
+                <Setter Property="TextColor"      Value="{StaticResource DarkText}"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="FontSize"       Value="12"/>
+                <Setter Property="Margin"         Value="2,6,0,4"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <!-- ===== Root with drawer overlay layer ===== -->
+    <Grid RowDefinitions="Auto,*">
+
+        <!-- Header -->
+        <Grid Grid.Row="0" BackgroundColor="{StaticResource PrimaryGreen}" Padding="12">
+            <Grid ColumnDefinitions="Auto,*,Auto" VerticalOptions="Center">
+                <Button
+                 x:Name="HamburgerBtn"
+                 Text="☰"
+                 FontSize="22"
+                 TextColor="White"
+                 BackgroundColor="Transparent"
+                 Padding="0"
+                 Clicked="ToggleDrawerClicked"/>
+                <Label Grid.Column="1"
+                    Text="Profile"
+                    TextColor="White"
+                    FontAttributes="Bold"
+                    FontSize="18"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"/>
+            </Grid>
+        </Grid>
+
+        <!-- Body -->
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="20,16" Spacing="18">
+
+                <!-- Photo card -->
+                <Border BackgroundColor="#1F6F4E" Padding="16" StrokeThickness="0">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="18"/>
+                    </Border.StrokeShape>
+
+                    <VerticalStackLayout Spacing="14" Padding="4" HorizontalOptions="Center">
+                        <!-- circular avatar -->
+                        <Border WidthRequest="120" HeightRequest="120" BackgroundColor="#E9EFEA">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="60"/>
+                            </Border.StrokeShape>
+
+                            <Grid>
+                                <!-- Image where the photo will appear -->
+                                <Image x:Name="ProfileImage"
+               Aspect="AspectFill"
+               IsVisible="False"/>
+
+                                <!-- Camera icon (shown only if no photo yet) -->
+                                <Label x:Name="CameraIcon"
+               Text="📷"
+               FontSize="36"
+               TextColor="#5B6E66"
+               HorizontalOptions="Center"
+               VerticalOptions="Center"/>
+                            </Grid>
+                        </Border>
+
+
+                        <!-- change photo -->
+                        <Button
+                         x:Name="ChangePhotoBtn"
+                         Text="Change Photo"
+                         Padding="14,6"
+                         CornerRadius="14"
+                         HorizontalOptions="Center"
+                         BackgroundColor="#E4ECE7"
+                         TextColor="{StaticResource DarkText}"
+                         Clicked="ChangePhotoBtn_Clicked"/>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Name -->
+                <Label Text="Name" Style="{StaticResource SectionLabel}"/>
+                <Border Style="{StaticResource InputShell}">
+                    <Entry x:Name="NameEntry"
+                        Style="{StaticResource Input}"
+                        Placeholder="Name"/>
+                </Border>
+
+                <!-- Student Number -->
+                <Label Text="Student Number" Style="{StaticResource SectionLabel}"/>
+                <Border Style="{StaticResource InputShell}">
+                    <Entry x:Name="StudNoEntry"
+                        Style="{StaticResource Input}"
+                        Keyboard="Numeric"
+                        Placeholder="Student Number"/>
+                </Border>
+
+                <!-- Year Level & Section -->
+                <Label Text="Year Level &amp; Section" Style="{StaticResource SectionLabel}"/>
+                <Border Style="{StaticResource InputShell}">
+                    <Entry x:Name="YearSecEntry"
+                        Style="{StaticResource Input}"
+                        Placeholder="Year Level &amp; Section"/>
+                </Border>
+
+                <!-- Log out -->
+                <Button
+                 x:Name="LogoutBtn"
+                 Text="LOG OUT"
+                 BackgroundColor="White"
+                 BorderColor="{StaticResource CardBorder}"
+                 BorderWidth="1"
+                 CornerRadius="14"
+                 Padding="18,12"
+                 TextColor="#D23B39"
+                 Margin="0,12,0,10"
+                 Clicked="LogoutBtn_Clicked"/>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- ===== LEFT DRAWER OVERLAY (from your AdminDashboard) ===== -->
+        <Grid x:Name="DrawerHost"
+           Grid.RowSpan="2"
+           IsVisible="False"
+           InputTransparent="False">
+            <!-- Backdrop -->
+            <BoxView x:Name="Backdrop"
+                  BackgroundColor="#80000000"
+                  Opacity="0"
+                  Grid.RowSpan="2">
+                <BoxView.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="Backdrop_Tapped"/>
+                </BoxView.GestureRecognizers>
+            </BoxView>
+
+            <!-- Drawer panel -->
+            <Border x:Name="DrawerPanel"
+                 BackgroundColor="White"
+                 WidthRequest="260"
+                 Padding="16"
+                 HorizontalOptions="Start"
+                 VerticalOptions="Fill"
+                 TranslationX="-260">
+                <Border.Shadow>
+                    <Shadow Brush="#55000000" Radius="12" Offset="0,3" Opacity="0.25"/>
+                </Border.Shadow>
+                <VerticalStackLayout Spacing="10">
+                    <Grid ColumnDefinitions="*,Auto" Padding="0,4,0,12">
+                        <Label Text="EKANDIDATO🗳️" FontAttributes="Bold" FontSize="18" TextColor="{StaticResource DarkText}"/>
+                        <Button Grid.Column="1" Text="✕" BackgroundColor="Transparent" TextColor="{StaticResource DarkText}" Clicked="ToggleDrawerClicked"/>
+                    </Grid>
+
+                    <!-- Same six buttons -->
+                    <Button Text="🏠  Home"
+                         BackgroundColor="#F4F7F6"
+                         TextColor="{StaticResource DarkText}"
+                         CornerRadius="14"
+                         Clicked="HomeBtn_Clicked"/>
+                    <Button Text="📅  Election Calendar"
+                         BackgroundColor="#F4F7F6"
+                         TextColor="{StaticResource DarkText}"
+                         CornerRadius="14"
+                         Clicked="ElectionCalendarBtn_Clicked"/>
+                    <Button Text="📊  Poll History"
+                         BackgroundColor="#F4F7F6"
+                         TextColor="{StaticResource DarkText}"
+                         CornerRadius="14"
+                         Clicked="PollHistoryBtn_Clicked"/>
+                    <Button Text="💬  Public Wall Opinion"
+                         BackgroundColor="#F4F7F6"
+                         TextColor="{StaticResource DarkText}"
+                         CornerRadius="14"
+                         Clicked="PublicWallBtn_Clicked"/>
+                    <Button Text="👤  Profile"
+                         BackgroundColor="#F4F7F6"
+                         TextColor="{StaticResource DarkText}"
+                         CornerRadius="14"
+                         Clicked="ProfileBtn_Clicked"/>
+                    <Button Text="ℹ️  About Us"
+                         BackgroundColor="#F4F7F6"
+                         TextColor="{StaticResource DarkText}"
+                         CornerRadius="14"
+                         Clicked="AboutUsBtn_Clicked"/>
+
+                   
+                </VerticalStackLayout>
+            </Border>
+        </Grid>
+
+    </Grid>
+    
+</ContentPage>
